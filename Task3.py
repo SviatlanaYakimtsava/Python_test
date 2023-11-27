@@ -13,37 +13,54 @@ homEwork:
 string_def = string_def.lower()     # converting string to lover case
 string_def = string_def.capitalize()  # converting string to make first word capitalized
 split_string = string_def.split()     # variable to keep list of words of the provided text
-flag = False
 new_sen = ''
+c = 0
 
-# normalizing string from letter case point of view
-for i in range(len(string_def)):
-    if flag and string_def[i].isalpha():
-        string_def = string_def[:i] + string_def[i].swapcase() + string_def[i + 1:]
-        flag = False
-    if string_def[i] in ['.', '\n', '\t']:
-        flag = True
+def normstring (string_def):
+    flag = False
+    # normalizing string from letter case point of view
+    for i in range(len(string_def)):
+        if flag and string_def[i].isalpha():
+            string_def = string_def[:i] + string_def[i].swapcase() + string_def[i + 1:]
+            flag = False
+        if string_def[i] in ['.', '\n', '\t']:
+            flag = True
+    return string_def
 
 #create new sentence
-for i in range(len(split_string)):
-    if split_string[i][len(split_string[i])-1] == '.':
-        new_sen += split_string[i].replace('.',' ')
-new_sen = new_sen.capitalize()
-new_sen = f"{new_sen[0: -1]}." #replace last element to .
-print('New sen = ', new_sen)
+def newstring (split_string):
+    global new_sen
+    for i in range(len(split_string)):
+        if split_string[i][len(split_string[i])-1] == '.':
+            new_sen += split_string[i].replace('.',' ')
+    new_sen = new_sen.capitalize()
+    new_sen = f"{new_sen[0: -1]}." #replace last element to .
+    return new_sen
 
-#add new sentence to the end of the paragrah
-index = string_def.find('paragraph.')+len('paragraph.')
-string_def = string_def[:index] + ' ' + new_sen + string_def[index:]
+def addstring (string_def, new_sen):
+    #add new sentence to the end of the paragrah
+    index = string_def.find('paragraph.')+len('paragraph.')
+    string_def = string_def[:index] + ' ' + new_sen + string_def[index:]
+    return string_def
 
 #replace iz to is
-string_def = string_def.replace(' iz ', ' is ')
-print(string_def)
+def replstring (string_def):
+    string_def = string_def.replace(' iz ', ' is ')
+    return string_def
 
+def countspace (string_def) ->int:
 #count of whitespace
-c = 0
-for i in string_def:
-    if(i.isspace()):
-        c += 1
-print("Number of Spaces : "+str(c))
+    global c
+    for i in string_def:
+        if(i.isspace()):
+            c += 1
+    return c
 
+string_def = normstring(string_def)
+new_sen = newstring(split_string)
+print('New sen = ', new_sen)
+string_def = addstring(string_def, new_sen)
+string_def = replstring(string_def)
+print(string_def)
+c = countspace(string_def)
+print("Number of Spaces :", c)
