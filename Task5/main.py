@@ -9,7 +9,7 @@ from datetime import timedelta
 class NewsGeneratorMenu:
 
     def __init__(self):
-        self.file = FilePoints()        # initialization of local variable with object of FileOperations class
+        self.file = FilePoints()        # initialization of local variable with object of FilePoints
 
     # function with general menu
     def general_menu(self):
@@ -17,12 +17,11 @@ class NewsGeneratorMenu:
             print("Select data type to generate: \n"  # print menu text 
                   "\t1. News\n"  # to generate news
                   "\t2. Private ad\n"  # to generate ad 
-                  "\t3. Horoscope\n"  # to generate horoscope forecast
+                  "\t3. Horoscope\n"  # to generate horoscope 
                   "\t0. Exit")  # to exip from the loop
 
             menu_input = input("Your choice: ")  # input selected option from the console
             menu_input = menu_input.lower()  # lowercased input text
-
             if menu_input.find("news") != -1 or menu_input.find("1") != -1:  # if user selected news or menu number
                 self.news_menu()      # Call the function to get news generator menu
             else:
@@ -30,13 +29,12 @@ class NewsGeneratorMenu:
                     self.private_ad_menu()      # Call the function to get private ad generator menu
                 else:
                     if menu_input.find("horoscope") != -1 or menu_input.find("3") != -1:
-                        self.horoscope_forecast_menu()    # Call the function to get horoscope forecast generator menu
+                        self.horoscope_menu()    # Call the function to get horoscope forecast generator menu
                     else:
                         if menu_input.find("exit") != -1 or menu_input.find("0") != -1:
-                            break  # exit from the infinite loop
+                            break
                         else:  # else print to console that printed text was incorrect
-                            print("Incorrect data type selected. Try again to type menu number (1-3) or type \'news\', "
-                                  "\'ad\' or \'horoscope\'")
+                            print("Try again to enter right values")
 
     def news_menu(self):
         news_body = input("Tell the news \n")
@@ -63,13 +61,13 @@ class NewsGeneratorMenu:
                     if expdate < datetime.now().date():  # if input date is less than current one
                         print("Entered expiration date is less than current one. Try again.")  # print to console
                     else:  # if input date is more than current one
-                        break  # exit from the loop
+                        break
                 except ValueError:  # exception handler
                     print("The entered date has wrong format. Try again.")  # print to console
         self.file.write_to_file(PrivateAd().generate_private_ad(ad_text, expdate))
         pass
 
-    def horoscope_forecast_menu(self):
+    def horoscope_menu(self):
         zodiacsign = input('Enter your zodiac sign \n')
         if len(zodiacsign) == 0:  # if input value is empty
             zodiacsign = "You haven't entered zodiac sign"  # put default value to the variable
